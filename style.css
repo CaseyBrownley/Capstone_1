@@ -1,0 +1,28 @@
+.search-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+  }
+  
+  h1{
+    text-align: center;
+  }
+  .navbar ul{
+    list-style-type: none;
+    background-color: green;
+    padding: 0px;
+    margin: 0px;
+  }
+  .navbar a{
+    color: wheat;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+    text-align: center;
+  }
+  .navbar a:hover{
+    background-color: blue;
+  }
+  .navbar li{
+    float: left;
+  }

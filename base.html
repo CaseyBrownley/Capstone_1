@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Star Wars Character Search</title>
+    <script src="https://unpkg.com/jquery"></script>
+    <script src="https://unpkg.com/popper"></script>
+    <script src="https://unpkg.com/bootstrap"></script>
+
+    <link rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Search for a Star Wars Character</h1>
+    <input type="text" id="characterName" placeholder="Enter character name">
+    <button onclick="searchCharacter()">Search</button>
+   
+    <div id="characterDetails"></div>
+   
+    <script>
+        async function searchCharacter() {
+            const name = document.getElementById('characterName').value;
+            const characterDetails = document.getElementById('characterDetails');
+            characterDetails.innerHTML = ''; // Clear previous results
+           
+            if (!name) {
+                characterDetails.innerHTML = 'Please enter a character name.';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/search?name=${name}`);
+                if (!response.ok) {
+                    const error = await response.json();
+                    characterDetails.innerHTML = error.message || "An error occurred.";
+                    return;
+                }
+               
+                const data = await response.json();
+                // Display character details if found
+                characterDetails.innerHTML = `
+                    <h2>${data.name}</h2>
+                    <p>Height: ${data.height} cm</p>
+                    <p>Mass: ${data.mass} kg</p>
+                    <p>Hair Color: ${data.hair_color}</p>
+                    <p>Skin Color: ${data.skin_color}</p>
+                    <p>Eye Color: ${data.eye_color}</p>
+                    <p>Birth Year: ${data.birth_year}</p>
+                    <p>Gender: ${data.gender}</p>
+                `;
+            } catch (error) {
+                characterDetails.innerHTML = "An error occurred during search.";
+            }
+        }
+    </script>
+</body>
+</html>
